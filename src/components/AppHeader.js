@@ -11,7 +11,8 @@ import {
   CNavLink,
   CNavItem,
 } from '@coreui/react'
-
+import CIcon from '@coreui/icons-react'
+import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 import { AppHeaderDropdown } from './header/index'
 
 const AppHeader = () => {
@@ -21,7 +22,15 @@ const AppHeader = () => {
   return (
     // logout
     <CHeader position="sticky" className="mb-4">
-      <CContainer fluid className="d-flex align-items-end justify-content-end">
+      <CContainer fluid className="d-flex">
+        {/* sidebarShow */}
+        <CHeaderToggler
+          className="ps-1"
+          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+        >
+          <CIcon icon={cilMenu} size="lg" />
+        </CHeaderToggler>
+        {/*  */}
         <CHeaderNav className="m-1">
           <AppHeaderDropdown />
         </CHeaderNav>
