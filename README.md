@@ -15,3 +15,13 @@
 + Only the user has the right to execute the modify command.
 + Search by username.
 ...
+## Built With
+### FE
++ HTML, CSS/SCSS, JS
++ ReactJs
++ CoreUi
++ Redux
++ Bootstrap
+### BE
++ NodeJs
++ MongoDB
