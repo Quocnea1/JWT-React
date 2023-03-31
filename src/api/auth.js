@@ -20,3 +20,12 @@ export const register = async (user) => {
     throw new Error(error.message)
   }
 }
+
+// export const forgotPassword = async (email) => {
+//   try {
+//     const { data } = await authApi.post('/forgot-password', { email })
+//     return Promise.resolve(data)
+//   } catch (error) {
+//     throw new Error(error.message)
+//   }
+// }

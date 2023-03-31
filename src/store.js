@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { login } from 'src/api/auth'
@@ -18,6 +19,8 @@ const changeState = (state = initialState, { type, ...rest }) => {
       return { ...state, ...rest }
     case 'logout':
       return { ...initialState, isLogin: false }
+    case 'error':
+      return { ...state, error: rest.error }
     default:
       return state
   }
@@ -28,10 +31,10 @@ export const loginAction = (user) => async (dispatch) => {
     const data = await login(user)
     localStorage.setItem('auth_user', JSON.stringify(data))
     localStorage.setItem('isLogin', true)
-
     dispatch({ type: 'loginsuccess', auth: data, isLogin: true })
   } catch (error) {
-    dispatch({ type: 'error', error: error.message })
+    // dispatch(setErrorAction(res.message))
+    toast.error('Wrong Username or Password')
   }
 }
 
@@ -41,8 +44,9 @@ export const logoutAction = () => async (dispatch) => {
     localStorage.removeItem('isLogin')
     dispatch({ type: 'logout' })
   } catch (error) {
-    dispatch({ type: 'error', error: error.message })
+    dispatch(setErrorAction(error.message))
   }
 }
 const store = createStore(changeState, applyMiddleware(thunk))
+export const setErrorAction = (error) => ({ type: 'error', error })
 export default store

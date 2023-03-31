@@ -19,17 +19,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from 'src/store'
 import { Alert } from '@coreui/coreui'
 import { toast } from 'react-toastify'
-
 const Login = () => {
   const isLogin = useSelector((state) => state.isLogin)
   const [isShowPassword, setIsShowPassword] = useState(true)
   const dispatch = useDispatch()
   const [user, setUser] = useState({ username: '', password: '' })
+
   // check user login
   if (isLogin) return <Navigate to={'/profile'} replace />
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(loginAction(user))
+      .then(() => {
+        // toast.success('Login successfully')
+      })
+      .catch((res) => {
+        // toast.error('error.message')
+        // alert"res")
+      })
   }
 
   return (

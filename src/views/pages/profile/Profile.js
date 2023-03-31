@@ -4,11 +4,17 @@ import { useDispatch } from 'react-redux'
 import { update } from 'src/api/user'
 import { logoutAction } from 'src/store'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [user, setUser] = useState({})
+
+  // giữ lại giá trị
+  // const [email, setEmail] = useState('')
+  // const [username, setUsername] = useState('')
+
   useEffect(() => {
     try {
       const user = JSON.parse(localStorage.getItem('auth_user'))
@@ -19,8 +25,10 @@ const Profile = () => {
     e.preventDefault()
     console.log('submit')
     update(user._id, user).then((data) => {
+      toast.success('Update Success')
+
       dispatch(logoutAction())
-      navigate('/login')
+      // navigate('/login')
     })
   }
   return (

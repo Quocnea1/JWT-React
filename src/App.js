@@ -28,8 +28,8 @@ class App extends Component {
             <Route path="*" name="Home" element={<DefaultLayout />} />
           </Routes>
           <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
+            position="top-center"
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -37,7 +37,7 @@ class App extends Component {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme="dark"
+            theme="light"
           />
         </Suspense>
       </HashRouter>
