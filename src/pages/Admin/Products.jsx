@@ -225,6 +225,19 @@ const Products = () => {
     }
   }
 
+  // phan ntrang
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+
+  // Tính số lượng trang
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  // Lấy ra danh sách sản phẩm trên trang hiện tại
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+
   return (
     <Container>
       <Sidebar/>
@@ -239,7 +252,7 @@ const Products = () => {
             <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={() => handleAddBtn()}>Thêm sản phẩm</motion.button>
           </Col>
         </div>
-        <AddProductDialog 
+        {/* <AddProductDialog 
           show={show}
           setShow={setShow}
           formMode={formMode}
@@ -258,7 +271,7 @@ const Products = () => {
           handleProductPicture={handleProductPicture}
           handleAddProduct={handleAddProduct}
           handleUpdateProduct={handleUpdateProduct}
-        />
+        /> */}
 
         <Table striped>
         <thead>
@@ -272,44 +285,42 @@ const Products = () => {
             <th>Hành động</th>
           </tr>
         </thead>
+     
         <tbody>
-        {
-          products.map((item, index) => 
-          (
+          {currentProducts.map((item, index) => (
             <tr key={index}>
               <td>{index}</td>
-              <td >{item.name}</td>
+              <td>{item.name}</td>
               <td>
-                {
-                  item.variants.map((chil, index) => (
-                    <div className="variant__item" key={index}>
-                      <span>{chil.name} : {chil.quantity}</span>
-                    </div>
-                  ))
-                }
+                {item.variants.map((chil, index) => (
+                  <div className="variant__item" key={index}>
+                    <span>
+                      {chil.name} : {chil.quantity}
+                    </span>
+                  </div>
+                ))}
               </td>
-              <td>{Number(item.price).toLocaleString("vi")}₫</td>
+              <td>{Number(item.price).toLocaleString('vi')}₫</td>
               <td>{item.discountPercent}%</td>
-              <td><img src={item.productPictures[0]} alt=''></img></td>
               <td>
-                {
-                  isDisable ? (
-                    <>
-                    <i className="ri-checkbox-line" onClick={() =>handleSetProduct(item._id)}></i>
-                    </>
-                  ) : (
-                    <>
-                      <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
-                      <> </>
-                      <i className="ri-delete-bin-line" onClick={() =>handleDeleteProduct(item._id)}></i>
-                    </>
-                  )
-                }
+                <img src={item.productPictures[0]} alt="" />
+              </td>
+              <td>
+                <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
+                <> </>
+                <i className="ri-delete-bin-line" onClick={() => handleDeleteProduct(item._id)}></i>
               </td>
             </tr>
-          ))
-        }
+          ))}
         </tbody>
+     
+
+      {/* Hiển thị phân trang */}
+      <div className="pagination">
+        {[...Array(totalPages)].map((_, index) => (
+          <button key={index} onClick={() => setCurrentPage(index + 1)}>{index + 1}</button>
+        ))}
+      </div>
       </Table>
       </Content>
     </Container>

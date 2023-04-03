@@ -56,7 +56,7 @@ const HomeAdmin = () => {
         </div>
         <Row xs={1} md={2} className="g-4">
           <Col>
-            <Card bg={"Light".toLowerCase()}>
+            <Card>
               <Card.Body>
                 <Card.Title>TỔNG DOANH THU</Card.Title>
                 <Card.Text>

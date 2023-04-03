@@ -17,36 +17,41 @@ import { useSelector } from "react-redux";
 import Catagories from "../pages/Admin/Catagories";
 import Orders from "../pages/Admin/Orders";
 import Users from "../pages/Admin/Users";
-
+import AdminRoute from "./ProtectedRoute";
 const Routers = () => {
   const { user } = useSelector((state) => state.auth);
-    return (
-      <Routes>
-        <Route element ={<ProtectedRoute/>}>
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/delivery' element={<Delivery/>}/>
-          <Route path='/purchase' element={<Purchase/>}/>
-          <Route path='/password' element={<Password/>}/>
-          <Route element={<ProtectedCheckout/>}>
-            <Route path='/checkout' element={<Checkout/>}/>
+  console.log(user)
+  return (
+    <Routes>
+      <Route element={<ProtectedRoute />}>
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/delivery' element={<Delivery />} />
+        <Route path='/purchase' element={<Purchase />} />
+        <Route path='/password' element={<Password />} />
+        <Route element={<ProtectedCheckout />}>
+          <Route path='/checkout' element={<Checkout />} />
+        </Route>
+        <Route element={<AdminRoute />}>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/products' element={<Products />} />
+            <Route path='/catagories' element={<Catagories />} />
+            <Route path='/users' element={<Users />} />
+            <Route path='/orders' element={<Orders />} />
           </Route>
         </Route>
-        <Route path='/' element={user.role === "admin" ? <HomeAdmin/> : <Home/>}/>
-        <Route path='/products' element={<Products/>}/>
-        <Route path='/catagories' element={<Catagories/>}/>
-        <Route path='/users' element={<Users/>}/>
-        <Route path='/orders' element={<Orders/>}/>
-        <Route path='/cart' element={<Cart/>}/>
-        <Route path='/shop' element={<Shop/>}/>
-        <Route path='/shop/:slug' element={<ProductDetail/>}/>
-        <Route path='/signin' element={<Login/>}/>
-        <Route path='/signup' element={<Signup/>}/>
-        <Route element ={<ProtectedUrl/>}>
-          <Route path="*" element={<Home/>}/>
-        </Route>
-      </Routes>
-    );
-  }
+      </Route>
+      <Route path='/' element={user.role === "admin" ? <HomeAdmin /> : <Home />} />
+      <Route path='/cart' element={<Cart />} />
+      <Route path='/shop' element={<Shop />} />
+      <Route path='/shop/:slug' element={<ProductDetail />} />
+      <Route path='/signin' element={<Login />} />
+      <Route path='/signup' element={<Signup />} />
+      <Route element={<ProtectedUrl />}>
+        <Route path="*" element={<Home />} />
+      </Route>
+    </Routes>
+  );
+}
   
 export default Routers;
   
